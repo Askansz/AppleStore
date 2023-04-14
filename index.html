@@ -14,8 +14,8 @@
           "AirPods": 2000,
           "AirPods Pro": 3000,
           "AirPods Max": 5000,
-          "1-pack of AirTag": 300,
-          "4-pack of AirTags": 1000,
+          "1-pack of AirTag": 470,
+          "4-pack of AirTags": 1275,
           "Gift Card": 0,
         };
         return itemPrices;
@@ -37,10 +37,10 @@
 
         while (true) {
           let item = prompt(
-            "What would you like to buy? (Type 'done' to exit)\n\n" +
+            "What would you like to buy? (Type 'Done' to exit)\n\n" +
               Object.keys(itemPrices).join("\n")
           );
-          if (item === "done") {
+          if (item === "Done") {
             break;
           }
           let quantity = prompt("How many would you like to buy?");
