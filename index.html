@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Askansz Tech Shop</title>
+    <meta charset="UTF-8">
+    <title>Askansz Tech</title>
   </head>
   <body>
     <script>
@@ -26,49 +27,36 @@
       function buyItems() {
         const itemPrices = setItemPrices();
         const shoppingCart = {};
-
         let name = prompt("What is your name?");
         let age = prompt("What is your age?");
-
         if (name === "Ben" || name === "Babben" || age < 13) {
           alert("Sorry, you are not allowed to buy anything.");
           return;
         }
-
         alert("Welcome to Askansz Tech!");
-
         while (true) {
           let item = prompt(
-            "What would you like to buy? (Type 'Done' to exit)\n\n" +
-              Object.keys(itemPrices).join("\n")
+            "What would you like to buy? (Type 'Done' to exit)\n\n" + Object.keys(itemPrices).join("\n")
           );
-
           if (item === "Done") {
             break;
           }
-
           let quantity = prompt("How many would you like to buy?");
-
           if (item in itemPrices) {
-            if (itemPrices[item] === 0) {
+            if (item === "Gift Card") {
               let giftCardAmount = prompt("How much would you like on your gift card?");
-
               if (giftCardAmount > 5000) {
                 alert("Sorry, the maximum amount for the gift card is 5000.");
                 continue;
               }
-
-              itemPrices[item] = parseInt(giftCardAmount);
               shoppingCart[item] = parseInt(giftCardAmount);
-
-              alert(`Added ${item} gift card with ${giftCardAmount} kr to your cart.`);
+              alert(`Added ${item} with ${giftCardAmount} kr to your cart.`);
             } else if (quantity > 0) {
               if (item in shoppingCart) {
                 shoppingCart[item] += parseInt(quantity);
               } else {
                 shoppingCart[item] = parseInt(quantity);
               }
-
               alert(`Added ${quantity} ${item}(s) to your cart.`);
             } else {
               alert("Quantity must be a positive integer.");
@@ -77,21 +65,19 @@
             alert("Sorry, that item is not available.");
           }
         }
-
         let total = 0;
         let items = "";
-
         for (const [item, quantity] of Object.entries(shoppingCart)) {
           let price = itemPrices[item];
+          if (item === "Gift Card") {
+            price = quantity;
+          }
           let itemTotal = price * quantity;
           total += itemTotal;
           items += `${quantity} ${item}(s) - ${itemTotal} kr\n`;
         }
-
         alert(`Your shopping cart:\n\n${items}\nTotal: ${total} kr`);
       }
-
-      buyItems();
     </script>
-  </body>
-</html>
+    <button onclick="buyItems()">Buy Items</button>
+  </
