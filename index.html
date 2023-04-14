@@ -1,82 +1,203 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Askansz Tech</title>
+    <title>Askansz Tech Shop</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f4f4f4;
+      }
+      #container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+      }
+      input[type="text"],
+      input[type="number"] {
+        padding: 10px;
+        font-size: 1.2rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 400px;
+      }
+      input[type="submit"] {
+        background-color: #008CBA;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #006D9C;
+      }
+      .shopping-cart {
+        display: none;
+        margin-top: 50px;
+      }
+      .item-list {
+        list-style: none;
+        padding: 0;
+      }
+      .item-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+      }
+      .item-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .item-price {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .item-quantity {
+        display: flex;
+        align-items: center;
+      }
+      .quantity-label {
+        font-size: 1.2rem;
+        margin-right: 10px;
+      }
+      .quantity-input {
+        padding: 5px;
+        font-size: 1.2rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+        width: 50px;
+        text-align: center;
+      }
+      .remove-item {
+        background-color: transparent;
+        border: none;
+        color: #008CBA;
+        font-size: 1.2rem;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .total {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
-    <script>
-      // Set the prices of the items
-      function setItemPrices() {
-        const itemPrices = {
-          "iPhone 14": 8700,
-          "iPhone 14 Plus": 11000,
-          "iPhone 14 Pro": 15000,
-          "iPhone 14 Pro Max": 22000,
-          "AirPods": 2500,
-          "AirPods Pro": 3800,
-          "AirPods Max": 5000,
-          "1-pack of AirTag": 475,
-          "4-pack of AirTags": 1275,
-        };
-        return itemPrices;
-      }
+    <div id="container">
+      <h1>Askansz Tech Shop</h1>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="age">Age:</label>
+        <input type="number" id="
+                                   </div>
 
-      // Buy items
-      function buyItems() {
-        const itemPrices = setItemPrices();
-        const shoppingCart = {};
-        let name = prompt("What is your name?");
-        let age = prompt("What is your age?");
-        if (name === "Ben" || name === "Babben" || age < 13) {
-          alert("Sorry, you are not allowed to buy anything.");
-          return;
+      <div class="shopping-cart">
+        <button class="cart-button" onclick="buyItems()">Buy Items</button>
+      </div>
+
+      <script>
+        // Set the prices of the items
+        function setItemPrices() {
+          const itemPrices = {
+            "iPhone 14": 8700,
+            "iPhone 14 Plus": 11000,
+            "iPhone 14 Pro": 15000,
+            "iPhone 14 Pro Max": 22000,
+            "AirPods": 2500,
+            "AirPods Pro": 3800,
+            "AirPods Max": 5000,
+            "1-pack of AirTag": 475,
+            "4-pack of AirTags": 1275,
+            "Gift Card": 0,
+          };
+          return itemPrices;
         }
-        alert("Welcome to Askansz Tech!");
-        while (true) {
-          let item = prompt(
-            "What would you like to buy? (Type 'Done' to exit)\n\n" + Object.keys(itemPrices).join("\n")
-          );
-          if (item === "Done") {
-            break;
+
+        // Buy items
+        function buyItems() {
+          const itemPrices = setItemPrices();
+          const shoppingCart = {};
+          let name = prompt("What is your name?");
+          let age = prompt("What is your age?");
+          if (name === "Ben" || name === "Babben" || age < 13) {
+            alert("Sorry, you are not allowed to buy anything.");
+            return;
           }
-          let quantity = prompt("How many would you like to buy?");
-          if (item in itemPrices) {
-            if (item === "Gift Card") {
-              let giftCardAmount = prompt("How much would you like on your gift card?");
-              if (giftCardAmount > 5000) {
-                alert("Sorry, the maximum amount for the gift card is 5000.");
-                continue;
-              }
-              shoppingCart[item] = parseInt(giftCardAmount);
-              alert(`Added ${item} with ${giftCardAmount} kr to your cart.`);
-            } else if (quantity > 0) {
-              if (item in shoppingCart) {
-                shoppingCart[item] += parseInt(quantity);
-              } else {
-                shoppingCart[item] = parseInt(quantity);
-              }
-              alert(`Added ${quantity} ${item}(s) to your cart.`);
-            } else {
-              alert("Quantity must be a positive integer.");
+          alert("Welcome to Askansz Tech!");
+          while (true) {
+            let item = prompt(
+              "What would you like to buy? (Type 'Done' to exit)\n\n" +
+                Object.keys(itemPrices).join("\n")
+            );
+            if (item === "Done") {
+              break;
             }
-          } else {
-            alert("Sorry, that item is not available.");
+            let quantity = prompt("How many would you like to buy?");
+            if (item in itemPrices) {
+              if (itemPrices[item] === 0) {
+                let giftCardAmount = prompt(
+                  "How much would you like on your gift card?"
+                );
+                if (giftCardAmount > 5000) {
+                  alert("Sorry, the maximum amount for the gift card is 5000.");
+                  continue;
+                }
+                itemPrices[item] = parseInt(giftCardAmount);
+                shoppingCart[item] = parseInt(giftCardAmount);
+                alert(
+                  `Added ${item} gift card with ${giftCardAmount} kr to your cart.`
+                );
+              } else if (quantity > 0) {
+                if (item in shoppingCart) {
+                  shoppingCart[item] += parseInt(quantity);
+                } else {
+                  shoppingCart[item] = parseInt(quantity);
+                }
+                alert(`Added ${quantity} ${item}(s) to your cart.`);
+              } else {
+                alert("Quantity must be a positive integer.");
+              }
+            } else {
+              alert("Sorry, that item is not available.");
+            }
           }
-        }
-        let total = 0;
-        let items = "";
-        for (const [item, quantity] of Object.entries(shoppingCart)) {
-          let price = itemPrices[item];
-          if (item === "Gift Card") {
-            price = quantity;
+          let total = 0;
+          let items = "";
+          for (const [item, quantity] of Object.entries(shoppingCart)) {
+            let price = itemPrices[item];
+            let itemTotal = price * quantity;
+            total += itemTotal;
+            items += `${quantity} ${item}(s) - ${itemTotal} kr\n`;
           }
-          let itemTotal = price * quantity;
-          total += itemTotal;
-          items += `${quantity} ${item}(s) - ${itemTotal} kr\n`;
+          alert(`Your shopping cart:\n\n${items}\nTotal: ${total} kr`);
         }
-        alert(`Your shopping cart:\n\n${items}\nTotal: ${total} kr`);
-      }
-    </script>
-    <button onclick="buyItems()">Buy Items</button>
-  </
+      </script>
+    </div>
+  </body>
+</html>    
