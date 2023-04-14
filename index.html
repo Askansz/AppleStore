@@ -1,94 +1,77 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Askansz Tech Store</title>
-    <script>
-      // Set the prices of the items
-      function setItemPrices() {
-        const itemPrices = {
-          "iPhone 14": 9000,
-          "iPhone 14 Plus": 10000,
-          "iPhone 14 Pro": 11000,
-          "iPhone 14 Pro Max": 12000,
-          "AirPods": 2000,
-          "AirPods Pro": 3000,
-          "AirPods Max": 5000,
-          "1-pack of AirTag": 470,
-          "4-pack of AirTags": 1275,
-          "Gift Card": 0,
-        };
-        return itemPrices;
+// Set the prices of the items
+function setItemPrices() {
+  const itemPrices = {
+    "iPhone 14": 8700,
+    "iPhone 14 Plus": 11000,
+    "iPhone 14 Pro": 15000,
+    "iPhone 14 Pro Max": 22000,
+    "AirPods": 2500,
+    "AirPods Pro": 3800,
+    "AirPods Max": 5000,
+    "1-pack of AirTag": 475,
+    "4-pack of AirTags": 1275,
+    "Gift Card": 0,
+  };
+  return itemPrices;
+}
+
+// Buy items
+function buyItems() {
+  const itemPrices = setItemPrices();
+  const shoppingCart = {};
+  let name = prompt("What is your name?");
+  let age = prompt("What is your age?");
+
+  if (name === "Ben" || name === "Babben" || age < 13) {
+    alert("Sorry, you are not allowed to buy anything.");
+    return;
+  }
+
+  alert("Welcome to Askansz Tech!");
+
+  while (true) {
+    let item = prompt(
+      "What would you like to buy? (Type 'Done' to exit)\n\n" +
+        Object.keys(itemPrices).join("\n")
+    );
+    if (item === "Done") {
+      break;
+    }
+    let quantity = prompt("How many would you like to buy?");
+    if (item in itemPrices) {
+      if (itemPrices[item] === 0) {
+        let giftCardAmount = prompt("How much would you like on your gift card?");
+        if (giftCardAmount > 5000) {
+          alert("Sorry, the maximum amount for the gift card is 5000.");
+          continue;
+        }
+        itemPrices[item] = parseInt(giftCardAmount);
+        shoppingCart[item] = parseInt(giftCardAmount);
+        alert(`Added ${item} gift card with ${giftCardAmount} kr to your cart.`);
+      } else if (quantity > 0) {
+        if (item in shoppingCart) {
+          shoppingCart[item] += parseInt(quantity);
+        } else {
+          shoppingCart[item] = parseInt(quantity);
+        }
+        alert(`Added ${quantity} ${item}(s) to your cart.`);
+      } else {
+        alert("Quantity must be a positive integer.");
       }
+    } else {
+      alert("Sorry, that item is not available.");
+    }
+  }
 
-      // Buy items
-      function buyItems() {
-        const itemPrices = setItemPrices();
-        const shoppingCart = {};
-        let name = prompt("What is your name?");
-        let age = prompt("What is your age?");
+  let total = 0;
+  let items = "";
 
-        if (name === "Ben" || name === "Babben" || age < 13) {
-          alert("Sorry, you are not allowed to buy anything.");
-          return;
-        }
+  for (const [item, quantity] of Object.entries(shoppingCart)) {
+    let price = itemPrices[item];
+    let itemTotal = price * quantity;
+    total += itemTotal;
+    items += `${quantity} ${item}(s) - ${itemTotal} kr\n`;
+  }
 
-        alert("Welcome to Askansz Tech!");
-
-        while (true) {
-          let item = prompt(
-            "What would you like to buy? (Type 'Done' to exit)\n\n" +
-              Object.keys(itemPrices).join("\n")
-          );
-          if (item === "Done") {
-            break;
-          }
-          let quantity = prompt("How many would you like to buy?");
-          if (item in itemPrices) {
-            if (itemPrices[item] === 0) {
-              let giftCardAmount = prompt(
-                "How much would you like on your gift card?"
-              );
-              if (giftCardAmount > 5000) {
-                alert("Sorry, the maximum amount for the gift card is 5000.");
-                continue;
-              }
-              shoppingCart[item] = parseInt(giftCardAmount);
-              alert(
-                `Added ${item} gift card with ${giftCardAmount} kr to your cart.`
-              );
-            } else if (quantity > 0) {
-              if (item in shoppingCart) {
-                shoppingCart[item] += parseInt(quantity);
-              } else {
-                shoppingCart[item] = parseInt(quantity);
-              }
-              alert(`Added ${quantity} ${item}(s) to your cart.`);
-            } else {
-              alert("Quantity must be a positive integer.");
-            }
-          } else {
-            alert("Sorry, that item is not available.");
-          }
-        }
-
-        let total = 0;
-        let items = "";
-
-        for (const [item, quantity] of Object.entries(shoppingCart)) {
-          let price = itemPrices[item];
-          let itemTotal = price * quantity;
-          total += itemTotal;
-          items += `${quantity} ${item}(s) - ${itemTotal} kr\n`;
-        }
-
-        alert(`Your shopping cart:\n\n${items}\nTotal: ${total} kr`);
-      }
-    </script>
-  </head>
-
-  <body>
-    <h1>Welcome to Askansz Tech Store</h1>
-    <button onclick="buyItems()">Buy Items</button>
-  </body>
-</html>
+  alert(`Your shopping cart:\n\n${items}\nTotal: ${total} kr`);
+}
